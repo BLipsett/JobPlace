@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS jobs(
   name VARCHAR(255) NOT NULL COMMENT 'job name',
   creatorId VARCHAR(255) NOT NULL COMMENT 'FK: user account',
   description VARCHAR(255) NOT NULL COMMENT 'job desc.',
-  qoute INT NOT NULL COMMENT 'job qoute',
+  quote INT NOT NULL COMMENT 'job qoute',
   FOREIGN KEY (creatorId) REFERENCES accounts(id) ON DELETE CASCADE
 ) default charset utf8 COMMENT '';
 
@@ -28,3 +28,6 @@ CREATE TABLE IF NOT EXISTS contractors(
   FOREIGN KEY (accountId) REFERENCES accounts(id) ON DELETE CASCADE,
   FOREIGN KEY (jobId) REFERENCES jobs(id) ON DELETE CASCADE
 ) default charset utf8 COMMENT '';
+
+ALTER TABLE jobs
+RENAME COLUMN qoute TO quote;

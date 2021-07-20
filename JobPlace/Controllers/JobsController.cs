@@ -40,7 +40,7 @@ namespace JobPlace.Controllers
       {
         Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
         jobData.CreatorId = userInfo.Id;
-
+        jobData.Creator = userInfo;
         var j = _js.CreateJob(jobData);
         return Ok(j);
       }

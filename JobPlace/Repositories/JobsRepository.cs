@@ -38,9 +38,9 @@ namespace JobPlace.Repositories
     {
       string sql = @"
       INSERT INTO jobs
-      (name, description, qoute, creatorId)
+      (name, description, quote, creatorId)
       VALUES 
-      (@Name, @Description, @Qoute, @CreatorId);
+      (@Name, @Description, @Quote, @CreatorId);
       SELECT LAST_INSERT_ID();
       ";
 
