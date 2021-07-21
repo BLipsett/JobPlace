@@ -34,6 +34,23 @@ namespace JobPlace.Repositories
       }, splitOn: "id").ToList();
     }
 
+    public Job GetOne(int id)
+    {
+      string sql = @"
+      SELECT j.*,
+      a.*
+      FROM jobs j
+      JOIN accounts a ON j.creatorId = a.id
+      WHERE j.id = @id;
+      ";
+      return _db.Query<Job, Profile, Job>(sql, (j, p) =>
+      {
+        j.Creator = p;
+        return j;
+      }, new { id }).FirstOrDefault();
+
+    }
+
     public object Create(Job jobData)
     {
       string sql = @"

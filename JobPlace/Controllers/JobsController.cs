@@ -33,6 +33,21 @@ namespace JobPlace.Controllers
       }
     }
 
+    [HttpGet("{id}")]
+    public ActionResult<Job> GetActionResult(int id)
+    {
+      try
+      {
+        Job job = _js.GetJobById(id);
+        return Ok(job);
+      }
+      catch (System.Exception e)
+      {
+
+        return BadRequest(e.Message);
+      }
+    }
+
     [HttpPost]
     async public Task<ActionResult<Job>> Create([FromBody] Job jobData)
     {

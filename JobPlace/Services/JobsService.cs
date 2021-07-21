@@ -26,5 +26,10 @@ namespace JobPlace.Services
 
       return job;
     }
+
+    internal Job GetJobById(int id)
+    {
+      return _JobRepo.GetOne(id);
+    }
   }
 }
