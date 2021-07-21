@@ -15,21 +15,51 @@ namespace JobPlace.Services
       _JobRepo = jobRepo;
     }
 
-    internal List<Job> GetJobs()
+    public List<Job> GetJobs()
     {
       return _JobRepo.GetAll();
     }
 
-    internal object CreateJob(Job jobData)
+    public Job GetJobById(int id)
+    {
+      return _JobRepo.GetOne(id);
+    }
+    public object CreateJob(Job jobData)
     {
       var job = _JobRepo.Create(jobData);
 
       return job;
     }
 
-    internal Job GetJobById(int id)
+    public Job Update(Job jobData, string id)
     {
-      return _JobRepo.GetOne(id);
+
+      // get this job by its id and set it to workplace
+      Job workplace = _JobRepo.GetOne(jobData.Id);
+      //If that returned nothing you might have wrong id
+      if (workplace == null)
+      {
+        throw new Exception("Invalid Id");
+      }
+      // ONly creator can update this job
+      if (workplace.CreatorId != id)
+      {
+        throw new Exception("Only creator can update");
+      }
+      // the job id came back now you can update with the data
+      return _JobRepo.Update(jobData);
     }
+
+    public void RemoveJob(int id, string userId)
+    {
+      Job workplace = GetJobById(id);
+
+      if (workplace.CreatorId != userId)
+      {
+        throw new Exception("You can't do that");
+      }
+      _JobRepo.RemoveJob(id);
+    }
+
   }
 }

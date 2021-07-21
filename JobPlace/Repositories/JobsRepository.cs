@@ -34,6 +34,16 @@ namespace JobPlace.Repositories
       }, splitOn: "id").ToList();
     }
 
+    public void RemoveJob(int id)
+    {
+      string sql = @"
+      DELETE FROM jobs
+      WHERE id = @id LIMIT 1;
+      ";
+
+      _db.Execute(sql, new { id });
+    }
+
     public Job GetOne(int id)
     {
       string sql = @"
@@ -51,6 +61,7 @@ namespace JobPlace.Repositories
 
     }
 
+
     public object Create(Job jobData)
     {
       string sql = @"
@@ -65,6 +76,17 @@ namespace JobPlace.Repositories
       jobData.Id = id;
       return jobData;
 
+    }
+    public Job Update(Job jobData)
+    {
+      string sql = @"
+      UPDATE jobs
+      SET
+      name = @Name
+      WHERE id = @Id;
+      ";
+      _db.Execute(sql, jobData);
+      return jobData;
     }
   }
 }
